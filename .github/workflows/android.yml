@@ -1,8 +1,9 @@
-name: Build and Upload Android APK on Release
+name: Build Android APK
 
 on:
-  release:
-    types: [created]  # Triggers only when a new release is created
+  push:
+    branches:
+      - main  # Trigger on push to main branch
 
 jobs:
   build:
@@ -20,24 +21,10 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: |
-          npm install
-          npx expo install
-          npm install -g eas-cli
+        run: npm install
 
-      - name: Clear npm cache
-        run: npm cache clean --force
-
-      - name: Prebuild Expo project
-        run: npx expo prebuild
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
 
       - name: Build APK
         run: npx eas build --platform android --profile production --non-interactive
-
-      - name: Upload APK as a release asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/**/*.apk
-          asset_name: app.apk
-          asset_content_type: application/vnd.android.package-archive
