@@ -13,24 +13,31 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Checkout the code from the repository
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3  # Set up Node.js environment
         with:
-          node-version: '18'
+          node-version: '18'  # Use Node.js version 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install  # Install project dependencies
+          npm install -g eas-cli  # Install EAS CLI globally
 
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
-        
-      - name: Initialize EAS project
-        run: eas init --non-interactive  # Initialize EAS for the project
+      - name: Check if EAS project is initialized
+        run: |
+          if [ ! -f eas.json ]; then
+            echo "EAS project not initialized, initializing now...";
+            eas init --non-interactive;  # Initialize EAS project if not found
+          else
+            echo "EAS project already initialized.";
+          fi
 
       - name: Clear npm cache
         run: npm cache clean --force  # Clear npm cache to avoid potential issues
 
       - name: Build APK
-        run: npx eas build --platform android --profile production --non-interactive
+        run: |
+          echo "Building APK...";
+          npx eas build --platform android --profile production --non-interactive --debug  # Build the APK with debug info
