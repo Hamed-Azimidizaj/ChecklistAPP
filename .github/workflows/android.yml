@@ -1,13 +1,12 @@
-name: Build Android APK
+name: Build and Upload Android APK on Release
 
 on:
-  push:
-    branches:
-      - main  # Runs on every push to the main branch
+  release:
+    types: [created]  # Triggers only when a new release is created
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use the free Linux-based runner
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -28,15 +27,15 @@ jobs:
         run: npm cache clean --force
 
       - name: Prebuild Expo project
-        run: |
-          npx expo prebuild
+        run: npx expo prebuild
 
       - name: Build APK
-        run: |
-          npx eas build --platform android --profile production --non-interactive
+        run: npx eas build --platform android --profile production --non-interactive
 
-      - name: Upload APK as artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload APK as a release asset
+        uses: actions/upload-release-asset@v1
         with:
-          name: android-apk
-          path: ./build/**/*.apk
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build/**/*.apk
+          asset_name: app.apk
+          asset_content_type: application/vnd.android.package-archive
