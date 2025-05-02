@@ -22,6 +22,9 @@ jobs:
         run: |
           npm install  # Install project dependencies
           npx expo install  # Ensure Expo dependencies are installed
+          npm install -g eas-cli  # Install EAS CLI globally
+      - name: Clear npm cache
+        run: npm cache clean --force  # Clear npm cache to avoid potential issues
 
       - name: Prebuild Expo project
         run: |
