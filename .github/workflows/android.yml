@@ -40,4 +40,4 @@ jobs:
       - name: Build APK
         run: |
           echo "Building APK...";
-          npx eas build --platform android --profile production --non-interactive --debug  # Build the APK with debug info
+          npx eas build --platform android --profile production --non-interactive  # Build the APK
