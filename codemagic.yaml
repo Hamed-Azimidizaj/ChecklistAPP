@@ -1,19 +1,18 @@
 workflows:
   expo-android:
     name: Build Expo Android APK
-    instance_type: mac_mini_m1
+    instance_type: linux  # Use a Linux instance for Android-only builds
     environment:
       vars:
         EXPO_PROJECT_ROOT: "."
     scripts:
       - name: Install dependencies
         script: |
-          npm install
+          npm install  # Install all necessary dependencies
       - name: Build Android APK
         script: |
-          npx expo install
-          npx expo prebuild
-          npx eas build --platform android --profile production --non-interactive
+          npx expo install  # Install Expo-related dependencies
+          npx expo prebuild  # Prebuild Expo project
+          npx eas build --platform android --profile production --non-interactive  # Build APK using EAS Build
     artifacts:
-      - build/**/*.apk
-      - build/**/*.aab
+      - build/**/*.apk  # Collect APK file as the artifact
