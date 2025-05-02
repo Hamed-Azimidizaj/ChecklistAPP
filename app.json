@@ -6,7 +6,7 @@
     "sdkVersion": "50.0.0", 
     "platforms": ["android"],
      "android": {
-      "package": "com.Hamed.checklistapp"
+      "package": "com.Hamed.checklistapp",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,4 +23,5 @@
       "package": "com.Hamed.checklistapp"
     }
   }
+}
 }
