@@ -11,33 +11,32 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Check out the code from the repository
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3  # Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Use Node.js version 18
+          node-version: '18'
 
       - name: Install dependencies
         run: |
-          npm install  # Install project dependencies
-          npx expo install  # Ensure Expo dependencies are installed
-          npm install -g eas-cli  # Install EAS CLI globally
+          npm install
+          npx expo install
+          npm install -g eas-cli
+
       - name: Clear npm cache
-        run: npm cache clean --force  # Clear npm cache to avoid potential issues
+        run: npm cache clean --force
 
       - name: Prebuild Expo project
         run: |
-          npx expo prebuild  # Prebuild the Expo project to make sure everything is ready
+          npx expo prebuild
 
       - name: Build APK
         run: |
-          npx eas build --platform android --profile production --non-interactive  # Build the APK
+          npx eas build --platform android --profile production --non-interactive
 
-      - name: Upload APK as a release asset
-        uses: actions/upload-release-asset@v1
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v3
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: build/**/*.apk
-          asset_name: app.apk
-          asset_content_type: application/vnd.android.package-archive
+          name: android-apk
+          path: ./build/**/*.apk
