@@ -4,9 +4,16 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "development": {
+      "android": {
+        "keystore": false
+      }
+    },
     "production": {
-      "developmentClient": false,
-      "distribution": "internal"
+      "android": {
+        "keystore": false,
+        "distribution": "internal"
+      }
     }
   }
 }
