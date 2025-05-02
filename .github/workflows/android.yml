@@ -32,7 +32,7 @@ jobs:
           npx eas build --platform android --profile production --non-interactive  # Build the APK
 
       - name: Upload APK as artifact
-        uses: actions/upload-artifact@v3  # Upload the generated APK as an artifact
+        uses: actions/upload-artifact@v2  # Upload the generated APK as an artifact
         with:
           name: android-apk  # The name of the artifact
           path: build/**/*.apk  # Path to the APK file
