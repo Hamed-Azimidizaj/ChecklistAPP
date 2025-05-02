@@ -1,0 +1,19 @@
+workflows:
+  expo-android:
+    name: Build Expo Android APK
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        EXPO_PROJECT_ROOT: "."
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Build Android APK
+        script: |
+          npx expo install
+          npx expo prebuild
+          npx eas build --platform android --profile production --non-interactive
+    artifacts:
+      - build/**/*.apk
+      - build/**/*.aab
