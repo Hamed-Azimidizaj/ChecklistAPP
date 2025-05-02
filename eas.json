@@ -6,12 +6,11 @@
   "build": {
     "development": {
       "android": {
-        "keystore": false
+        "distribution": "internal"
       }
     },
     "production": {
       "android": {
-        "keystore": false,
         "distribution": "internal"
       }
     }
